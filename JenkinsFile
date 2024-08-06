@@ -1,0 +1,24 @@
+def commitHash
+def branchName
+
+pipeline {
+    agent any
+
+    stages {
+        stage("Preparing Build"){
+            steps {
+                echo "[+] Preparing the build"
+                script {
+                    commitHash = sh(returnStdout: true, script: 'git rev-parse HEAD').trim()
+                    branchName = env.GIT_BRANCH
+                    currentBuild.displayName = "DT-${BUILD_NUMBER}-${commitHash.take(9)}"
+                }
+            }
+        }
+    }
+}
+
+
+
+
+
