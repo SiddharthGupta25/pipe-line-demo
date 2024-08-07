@@ -1,24 +1,46 @@
-def commitHash
-def branchName
-
 pipeline {
     agent any
 
+    environment {
+
+    }
+
+    parameters {
+        string(name: 'BROWSER_NAME', defaultValue: 'chrome', description: 'Browser to use for tests')
+    }
+
     stages {
-        stage("Preparing Build"){
+        stage('Preparing Build') {
             steps {
                 echo "[+] Preparing the build"
                 script {
+
                     commitHash = sh(returnStdout: true, script: 'git rev-parse HEAD').trim()
-                    branchName = env.GIT_BRANCH
+                    branchName = env.BRANCH_NAME
                     currentBuild.displayName = "DT-${BUILD_NUMBER}-${commitHash.take(9)}"
                 }
             }
         }
+
+        stage('Resolving Dependencies') {
+            steps {
+                echo "[+] Resolving dependencies"
+                sh 'mvn clean install'
+            }
+        }
+
+        stage('Executing Tests') {
+            steps {
+                echo "[+] Executing tests"
+                sh "mvn clean test -Dbrowser=${params.BROWSER_NAME}"
+            }
+        }
+    }
+
+    post {
+        always {
+            echo "[+] Cleaning up"
+            // Add cleanup steps if needed
+        }
     }
 }
-
-
-
-
-
