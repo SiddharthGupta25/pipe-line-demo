@@ -2,8 +2,10 @@ pipeline {
     agent any
 
     parameters {
-        string(name: 'BROWSER_NAME', defaultValue: 'chrome', description: 'Browser to use for tests')
+        integer(name: 'VALUE1', defaultValue: 10, description: 'Operand 1')
+        integer(name: 'VALUE2', defaultValue: 20, description: 'Operand 2')
     }
+
 
     stages {
         stage('Preparing Build') {
@@ -18,30 +20,18 @@ pipeline {
             }
         }
 
-        stage('Setting Permissions'){
-            steps {
-                script {
-                    echo "[+] Setting executable permissions"
-                    pwd
-                    def execPath = 'src/test/resources'
-                    sh "chmod -R +x ${execPath}"
-                }
-
-            }
-        }
-
        stage('Executing Tests') {
             steps {
                 echo "[+] Executing tests"
-                sh "mvn clean test -B -Dbrowser=${params.BROWSER_NAME}"
+                sh "mvn clean test -B -Dvalue1=${params.VALUE1} -Dvalue2=${params.VALUE2}"
             }
         }
     }
 
     post {
         always {
-            echo "[+] Cleaning up"
-            // Add cleanup steps if needed
+            echo "[+] Sending Emails"
+
         }
     }
 }

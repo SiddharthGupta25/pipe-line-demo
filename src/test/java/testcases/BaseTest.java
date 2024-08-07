@@ -1,38 +1,29 @@
 package testcases;
 
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.edge.EdgeDriver;
-import org.openqa.selenium.edge.EdgeOptions;
+import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
-import org.openqa.selenium.WebDriver;
+import org.testng.annotations.Test;
 
 public class BaseTest {
 
-    WebDriver driver;
-
     @BeforeClass
     public void setup() {
-        String browser = System.getProperty("browser");
+        System.out.println("[+] Test fixture set");
+    }
 
-        if(browser.equals("chrome")) {
-            System.setProperty("webdriver.chrome.driver", "src/test/resources/chromedriver.exe");
-            ChromeOptions chromeOptions = new ChromeOptions();
-            chromeOptions.addArguments("--remote-allow-origins=*");
-            chromeOptions.addArguments("--headless");
-            driver = new ChromeDriver(chromeOptions);
-
-        } else if (browser.equals("edge")) {
-            System.setProperty("webdriver.edge.driver", "src/test/resources/msedgedriver.exe");
-            driver = new EdgeDriver();
-        }
-        driver.get("https://www.google.com");
+    @Test
+    public void testSum(){
+        int value1 = Integer.parseInt(System.getProperty("value1"));
+        int value2 = Integer.parseInt(System.getProperty("value2"));
+        int sum = value1 + value2;
+        System.out.println("[+] Sum: " + sum);
+        Assert.assertEquals(sum, (value1 + value2), "Sum is incorrect");
     }
 
 
     @AfterClass
     public void tearDown() {
-        this.driver.close();
+        System.out.println("[+] Test fixture closed");
     }
 }
