@@ -18,17 +18,10 @@ pipeline {
             }
         }
 
-        stage('Resolving Dependencies') {
-            steps {
-                echo "[+] Resolving dependencies"
-                sh 'mvn clean install'
-            }
-        }
-
-        stage('Executing Tests') {
+       stage('Executing Tests') {
             steps {
                 echo "[+] Executing tests"
-                sh "mvn clean test -Dbrowser=${params.BROWSER_NAME}"
+                sh "mvn clean test -B -Dbrowser=${params.BROWSER_NAME}"
             }
         }
     }
