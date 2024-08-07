@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     parameters {
-        integer(name: 'VALUE1', defaultValue: 10, description: 'Operand 1')
-        integer(name: 'VALUE2', defaultValue: 20, description: 'Operand 2')
+        string(name: 'VALUE1', defaultValue: 10, description: 'Operand 1')
+        string(name: 'VALUE2', defaultValue: 20, description: 'Operand 2')
     }
 
 
