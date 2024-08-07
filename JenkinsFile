@@ -22,6 +22,7 @@ pipeline {
             steps {
                 script {
                     echo "[+] Setting executable permissions"
+                    pwd
                     def execPath = 'resources'
                     sh "chmod -R +x ${execPath}"
                 }
