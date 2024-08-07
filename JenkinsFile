@@ -23,7 +23,7 @@ pipeline {
                 script {
                     echo "[+] Setting executable permissions"
                     pwd
-                    def execPath = 'resources'
+                    def execPath = 'src/test/resources'
                     sh "chmod -R +x ${execPath}"
                 }
 
