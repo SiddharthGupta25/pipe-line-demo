@@ -18,6 +18,17 @@ pipeline {
             }
         }
 
+        stage('Setting Permissions'){
+            steps {
+                script {
+                    echo "[+] Setting executable permissions"
+                    def execPath = 'resources'
+                    sh "chmod -R +x ${execPath}"
+                }
+
+            }
+        }
+
        stage('Executing Tests') {
             steps {
                 echo "[+] Executing tests"
