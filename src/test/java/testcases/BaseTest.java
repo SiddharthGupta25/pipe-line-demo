@@ -20,6 +20,7 @@ public class BaseTest {
             System.setProperty("webdriver.chrome.driver", "src/test/resources/chromedriver.exe");
             ChromeOptions chromeOptions = new ChromeOptions();
             chromeOptions.addArguments("--remote-allow-origins=*");
+            chromeOptions.addArguments("--headless");
             driver = new ChromeDriver(chromeOptions);
 
         } else if (browser.equals("edge")) {
